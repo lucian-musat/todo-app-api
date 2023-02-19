@@ -44,7 +44,10 @@ export class TodoController implements IController {
     request: express.Request,
     response: express.Response
   ) => {
-    const allTodos = await new TodoService().getAll(request.query);
+    const allTodos = await new TodoService().getAll({
+      ...request.query,
+      createdBy: response.locals.userId,
+    });
     response.status(200).json(allTodos);
   };
 
@@ -67,7 +70,7 @@ export class TodoController implements IController {
       +request.params.id,
       patchTodoRequest
     );
-    response.status(201).json(patchedTodo);
+    response.status(200).json(patchedTodo);
   };
 
   deleteTodo = async (request: express.Request, response: express.Response) => {

@@ -2,6 +2,7 @@ import "reflect-metadata";
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
+import cors from "cors";
 import { loggerMiddleware } from "./middlewares/logger-middleware";
 import { IController } from "./models/global";
 import { errorsHandlerMiddleware } from "./middlewares/error-middleware";
@@ -23,6 +24,7 @@ export class App {
   }
 
   private useMiddlewares() {
+    this.app.use(cors());
     this.app.use(bodyParser.json());
     this.app.use(loggerMiddleware);
   }
